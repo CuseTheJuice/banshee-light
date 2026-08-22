@@ -1,0 +1,25 @@
+{
+    "name":  "Banshee Wallet firmware",
+    "version":  "0.1.66",
+    "model":  "lilygo-t-display-s3",
+    "chip":  "ESP32-S3",
+    "flashMode":  "qio",
+    "flashFreq":  "80m",
+    "flashSize":  "16MB",
+    "baudRate":  460800,
+    "bundle":  "banshee-firmware.zip",
+    "files":  [
+                  {
+                      "offset":  0,
+                      "path":  "bootloader.bin"
+                  },
+                  {
+                      "offset":  32768,
+                      "path":  "partitions.bin"
+                  },
+                  {
+                      "offset":  65536,
+                      "path":  "firmware.bin"
+                  }
+              ]
+}

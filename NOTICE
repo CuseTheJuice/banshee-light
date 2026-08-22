@@ -1,0 +1,14 @@
+Banshee Light
+Copyright 2026 CuseTheJuice
+
+This product includes software developed by Craig Raw as
+Sparrow Wallet, Lark, and Drongo, licensed under the Apache License,
+Version 2.0 (the "License"). You may not use this file except in
+compliance with the License. A copy of the License is in LICENSE.
+
+  https://github.com/sparrowwallet/sparrow
+  https://github.com/sparrowwallet/lark
+  https://github.com/sparrowwallet/drongo
+
+This distribution contains modifications by CuseTheJuice
+(Banshee Light USB-only singlesig, hardware support, branding).

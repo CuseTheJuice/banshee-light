@@ -1,0 +1,94 @@
+package com.sparrowwallet.drongo.wallet;
+
+import com.sparrowwallet.drongo.address.Address;
+import com.sparrowwallet.drongo.address.P2AAddress;
+import com.sparrowwallet.drongo.dns.DnsPayment;
+import com.sparrowwallet.drongo.dns.DnsPaymentCache;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
+public class Payment {
+    private Address address;
+    private String label;
+    private long amount;
+    private boolean sendMax;
+    private Type type;
+
+    public Payment(Address address, String label, long amount, boolean sendMax) {
+        this(address, label, amount, sendMax, Type.DEFAULT);
+    }
+
+    public Payment(Address address, String label, long amount, boolean sendMax, Type type) {
+        this.address = address;
+        this.label = label == null && address instanceof P2AAddress ? address.getOutputScriptDataType() : label;
+        this.amount = amount;
+        this.sendMax = sendMax;
+        this.type = type == Type.DEFAULT && address instanceof P2AAddress ? Type.ANCHOR : type;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
+
+    public boolean isSendMax() {
+        return sendMax;
+    }
+
+    public void setSendMax(boolean sendMax) {
+        this.sendMax = sendMax;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public enum Type {
+        DEFAULT, WHIRLPOOL_FEE, FAKE_MIX, MIX, ANCHOR;
+
+        public String toDisplayString() {
+            return Arrays.stream(this.toString().toLowerCase(Locale.ROOT).split("_"))
+                    .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1))
+                    .collect(Collectors.joining(" "));
+        }
+    }
+
+    public String getDisplayAddress() {
+        return address.toString();
+    }
+
+    @Override
+    public String toString() {
+        DnsPayment dnsPayment = DnsPaymentCache.getDnsPayment(this);
+        if(dnsPayment != null) {
+            return dnsPayment.toString();
+        }
+
+        return getDisplayAddress();
+    }
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.sparrowwallet.sparrow.control.DialogImage?>
+
+<StackPane prefHeight="460.0" prefWidth="600.0" stylesheets="@about.css, @general.css" fx:controller="com.sparrowwallet.sparrow.AboutController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <VBox spacing="20">
+        <HBox styleClass="title-area">
+            <HBox alignment="CENTER_LEFT">
+                <Label fx:id="title" text="Banshee Light" styleClass="title-label" />
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <DialogImage type="SPARROW" AnchorPane.rightAnchor="0"/>
+        </HBox>
+        <VBox spacing="10" styleClass="content-area">
+            <Label text="Bluetooth wallet for LilyGO T-Display S3. USB is only for flashing. Works with Studio-flashed (Secure Boot) boards and new Light-flashed chips." wrapText="true" />
+            <Label text="Unlock, dice, backup, and sign over Bluetooth without a .pem. App firmware updates on fused boards: Flash over USB and choose that board's original Studio signing key. Bootloader recovery stays in Studio Full reflash." wrapText="true" />
+            <Label text="Based on Sparrow Wallet, Lark, and Drongo. Apache License 2.0." wrapText="true" />
+        </VBox>
+        <HBox styleClass="button-area" alignment="BOTTOM_RIGHT" VBox.vgrow="SOMETIMES">
+            <Button text="Close" onAction="#close" />
+        </HBox>
+    </VBox>
+</StackPane>

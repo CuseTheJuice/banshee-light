@@ -1,0 +1,23 @@
+# SHA256 of binaries bundled in this repo.
+# Verify after clone:  sha256sum -c SHA256SUMS.txt
+# espflash is from https://github.com/esp-rs/espflash (record the release tag when you update it).
+# libbwt_jni / libsecp256k1 are Sparrow/Drongo natives; record the upstream commit when you update them.
+
+2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363  src/main/resources/firmware/bootloader.bin
+9ec429152b66f32ffedaf88d7fdb7b022c4bf6759b26330af9de77ba6ed0a54f  src/main/resources/firmware/firmware.bin
+bd0f7954aca2ef7d925ee21aaa1f3dc8822d1d6ce5cbbd26a135e5886bfff6ce  src/main/resources/firmware/partitions.bin
+0cc03364c70a86325236f18ad1aaed17eedf267d89312c0cdabe4964f5cb758e  src/main/resources/flash/espflash.exe
+03869e52b4ab6433720087eb8b895a94852e0c6f1e44b07c184b1dfeaab2f6ae  src/main/resources/flash/espflash-linux
+03869e52b4ab6433720087eb8b895a94852e0c6f1e44b07c184b1dfeaab2f6ae  src/main/resources/native/linux/x64/espflash
+0cc03364c70a86325236f18ad1aaed17eedf267d89312c0cdabe4964f5cb758e  src/main/resources/native/windows/x64/espflash.exe
+49ea61c9cde78fe7de322cba3b5e0d0b06bbc6c41fb4c40fbc59e986479f0e16  src/main/resources/native/linux/x64/libbwt_jni.so
+9075fed80a1002eb770b4500d5ee4a098c52ded4582733490b726c6235d0e3af  src/main/resources/native/linux/aarch64/libbwt_jni.so
+6e56671dea1faaa379c24c660292c825391045426206404da23d741e2084118c  src/main/resources/native/osx/x64/libbwt_jni.dylib
+ebe60c708f3be03aa4f4848993131da3a09dee9e883463ca112846eff5564aab  src/main/resources/native/osx/aarch64/libbwt_jni.dylib
+3747aaec6a4ecc5cab7fb7ba35fd452b198de748d6765c2562845fd728631478  src/main/resources/native/windows/x64/bwt_jni.dll
+61ca7ca3090552417b946ddc537135c9b18b01cea6f4cae9883b0fb6f501146f  drongo/src/main/resources/native/linux/x64/libsecp256k1.so
+bebbd3129cad960743fcf13877716b04542fe552259dd7403aef5b6a4b7121d5  drongo/src/main/resources/native/linux/aarch64/libsecp256k1.so
+9d7538a3eda0823a37d056beeeb45a221d608dafbca1eaee2f60661e89c87cf6  drongo/src/main/resources/native/osx/x64/libsecp256k1.dylib
+41f7df9a64982c0b6ecb9568e11c32c3cd989690687852f853e53614853b1a86  drongo/src/main/resources/native/osx/aarch64/libsecp256k1.dylib
+440644944b12373a07954eeb032bbe8e3cae34c78aeda7bdc9ed3650f59a657d  drongo/src/main/resources/native/windows/x64/libsecp256k1-0.dll
+83b1769684a651b41ee5d08a2784b17ea8faacd4f5b96cf687f5a6805950375d  lark/src/main/resources/com/sparrowwallet/lark/native/banshee-ble.exe

@@ -1,0 +1,147 @@
+package com.sparrowwallet.drongo;
+
+import com.sparrowwallet.drongo.crypto.ChildNumber;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
+public class KeyDerivation {
+    public static final String DEFAULT_WATCH_ONLY_FINGERPRINT = "00000000";
+
+    private final String masterFingerprint;
+    private final String derivationPath;
+    private transient List<ChildNumber> derivation;
+
+    public KeyDerivation(String masterFingerprint, List<ChildNumber> derivation) {
+        this(masterFingerprint, writePath(derivation));
+    }
+
+    public KeyDerivation(String masterFingerprint, String derivationPath) {
+        this(masterFingerprint, derivationPath, false);
+    }
+
+    public KeyDerivation(String masterFingerprint, String derivationPath, boolean rewritePath) {
+        this.masterFingerprint = masterFingerprint == null ? null : masterFingerprint.toLowerCase(Locale.ROOT);
+        this.derivation = parsePath(derivationPath);
+        this.derivationPath = rewritePath ? writePath(derivation) : derivationPath;
+    }
+
+    public String getMasterFingerprint() {
+        return masterFingerprint;
+    }
+
+    public String getDerivationPath() {
+        return derivationPath;
+    }
+
+    public List<ChildNumber> getDerivation() {
+        if(derivation == null) {
+            derivation = parsePath(derivationPath);
+        }
+
+        return Collections.unmodifiableList(derivation);
+    }
+
+    public KeyDerivation extend(ChildNumber extension) {
+        return extend(List.of(extension));
+    }
+
+    public KeyDerivation extend(List<ChildNumber> extension) {
+        List<ChildNumber> extendedDerivation = new ArrayList<>(getDerivation());
+        extendedDerivation.addAll(extension);
+        return new KeyDerivation(masterFingerprint, writePath(extendedDerivation));
+    }
+
+    public static List<ChildNumber> parsePath(String path) {
+        return parsePath(path, 0);
+    }
+
+    public static List<ChildNumber> parsePath(String path, int wildcardReplacement) {
+        List<ChildNumber> nodes = new ArrayList<>();
+        if(path == null) {
+            return nodes;
+        }
+
+        String[] parsedNodes = path.replace("M", "").replace("m", "").split("/");
+        for (String n : parsedNodes) {
+            n = n.replaceAll(" ", "");
+            if (n.length() == 0) continue;
+            boolean isHard = n.endsWith("H") || n.endsWith("h") || n.endsWith("'");
+            if (isHard) n = n.substring(0, n.length() - 1);
+            if (n.equals("*")) n = Integer.toString(wildcardReplacement);
+            int nodeNumber = Integer.parseInt(n);
+            nodes.add(new ChildNumber(nodeNumber, isHard));
+        }
+
+        return nodes;
+    }
+
+    public static String writePath(List<ChildNumber> pathList) {
+        return writePath(pathList, true);
+    }
+
+    public static String writePath(List<ChildNumber> pathList, boolean useApostrophes) {
+        StringBuilder path = new StringBuilder("m");
+        for(ChildNumber child: pathList) {
+            path.append("/");
+            path.append(child.toString(useApostrophes));
+        }
+
+        return path.toString();
+    }
+
+    public static boolean isValid(String derivationPath) {
+        try {
+            parsePath(derivationPath);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static List<ChildNumber> getBip47Derivation(int account) {
+        return List.of(new ChildNumber(47, true), new ChildNumber(Network.get() == Network.MAINNET ? 0 : 1, true), new ChildNumber(Math.max(0, account), true));
+    }
+
+    public static List<ChildNumber> getBip352Derivation(int account) {
+        return List.of(new ChildNumber(352, true), new ChildNumber(Network.get() == Network.MAINNET ? 0 : 1, true), new ChildNumber(Math.max(0, account), true));
+    }
+
+    public static List<ChildNumber> getBip352ScanDerivation(List<ChildNumber> derivation) {
+        List<ChildNumber> scanDerivation = new ArrayList<>(derivation);
+        scanDerivation.add(new ChildNumber(1, true));
+        scanDerivation.add(new ChildNumber(0, false));
+        return Collections.unmodifiableList(scanDerivation);
+    }
+
+    public static List<ChildNumber> getBip352SpendDerivation(List<ChildNumber> derivation) {
+        List<ChildNumber> spendDerivation = new ArrayList<>(derivation);
+        spendDerivation.add(new ChildNumber(0, true));
+        spendDerivation.add(new ChildNumber(0, false));
+        return Collections.unmodifiableList(spendDerivation);
+    }
+
+    public KeyDerivation copy() {
+        return new KeyDerivation(masterFingerprint, derivationPath);
+    }
+
+    public String toString() {
+        return masterFingerprint + (derivationPath != null ? derivationPath.replace("m", "") : "");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        KeyDerivation that = (KeyDerivation) o;
+        return that.toString().equals(this.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+}

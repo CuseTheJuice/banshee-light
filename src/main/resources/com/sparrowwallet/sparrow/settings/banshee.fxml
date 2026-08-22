@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import tornadofx.control.Field?>
+<?import tornadofx.control.Fieldset?>
+<?import tornadofx.control.Form?>
+<?import com.sparrowwallet.sparrow.control.UnlabeledToggleSwitch?>
+
+<GridPane hgap="10.0" vgap="10.0" stylesheets="@settings.css, @../general.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sparrowwallet.sparrow.settings.BansheeSettingsController">
+    <padding>
+        <Insets left="25.0" right="25.0" top="25.0" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+
+    <Form GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Fieldset inputGrow="SOMETIMES" text="Banshee Light" styleClass="wideLabelFieldSet">
+            <Field text="Studio URL:">
+                <TextField fx:id="studioUrl" promptText="https://localhost:8457" />
+            </Field>
+            <Field text="Link code:">
+                <TextField fx:id="studioToken" promptText="From Studio Signing tab" />
+            </Field>
+            <Field text="Sign via Studio:">
+                <UnlabeledToggleSwitch fx:id="studioSigning" />
+            </Field>
+        </Fieldset>
+        <Label text="This app talks to Banshee over Bluetooth and holds the unlock oracle on this computer. USB is only for flashing firmware. Sign via Studio is optional." wrapText="true" styleClass="help"/>
+        <Label text="Studio-flashed Secure Boot hardware is supported. App updates use the original .pem; bootloader recovery is Studio Full reflash." wrapText="true" styleClass="help"/>
+    </Form>
+</GridPane>

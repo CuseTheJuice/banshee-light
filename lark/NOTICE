@@ -1,0 +1,11 @@
+Lark (Banshee fork)
+Copyright 2026 CuseTheJuice
+
+This product includes software developed by Craig Raw as Lark,
+licensed under the Apache License, Version 2.0. A copy of the
+License is in LICENSE.
+
+  https://github.com/sparrowwallet/lark
+
+This distribution contains modifications by CuseTheJuice
+(Banshee USB/serial client and signing).
